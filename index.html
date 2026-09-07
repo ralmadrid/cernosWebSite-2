@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="site-title">Allo Jibli - فاس</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* تعريف متغيرات الألوان للوضع الليلي والنهاري */
+        :root {
+            --bg-body: #0b0b0b;
+            --bg-header: rgba(20, 20, 20, 0.85);
+            --bg-card: #141414;
+            --bg-hero: linear-gradient(145deg, #141414, #1a1a1a);
+            --bg-footer: #121212;
+            --text-main: #f5f5f5;
+            --text-muted: #b0b0b0;
+            --text-sub: #c0c0c0;
+            --border-color: #262626;
+            --border-card: #222;
+            --accent-color: #ff6600;
+            --accent-hover: #e55c00;
+            --nav-link: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.6);
+        }
+
+        html.light-mode {
+            --bg-body: #f4f4f4;
+            --bg-header: rgba(255, 255, 255, 0.85);
+            --bg-card: #ffffff;
+            --bg-hero: linear-gradient(145deg, #ffffff, #eaeaea);
+            --bg-footer: #e4e4e4;
+            --text-main: #111111;
+            --text-muted: #555555;
+            --text-sub: #444444;
+            --border-color: #ddd;
+            --border-card: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --nav-link: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            background-color: var(--bg-header);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--accent-color);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 10px rgba(255, 102, 0, 0.3);
+        }
+
+        /* شارة الشعار المحدثة: دراج باللون البرتقالي */
+        .logo-badge {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--accent-color), #ff8833);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.8rem;
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+            border: 2px solid #fff;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            color: var(--nav-link);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: 0.3s;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--accent-color);
+            background: rgba(255, 102, 0, 0.1);
+        }
+
+        .controls-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover, .lang-btn.active {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            background: rgba(255, 102, 0, 0.1);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-home {
+            text-align: center;
+            padding: 70px 20px;
+            background: var(--bg-hero);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-home::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        .hero-home h1 {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .hero-home p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 35px;
+            line-height: 1.8;
+        }
+
+        .about-content {
+            background-color: var(--bg-card);
+            padding: 50px;
+            border-radius: 20px;
+            border-right: 6px solid var(--accent-color);
+            border-top: 1px solid var(--border-card);
+            border-left: 1px solid var(--border-card);
+            border-bottom: 1px solid var(--border-card);
+            line-height: 1.9;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        html[dir="ltr"] .about-content {
+            border-right: 1px solid var(--border-card);
+            border-left: 6px solid var(--accent-color);
+        }
+
+        .about-content h2 {
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .about-content p {
+            color: var(--text-sub);
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+        }
+
+        .section-title {
+            color: var(--accent-color);
+            margin: 45px 0 25px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .menu-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-color);
+            box-shadow: 0 12px 35px rgba(255, 102, 0, 0.15);
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+
+        .menu-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .price {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: var(--accent-color);
+            color: #000000;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+        }
+
+        /* نافذة اختيار الصوصات العادية (Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-color);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+
+        .modal-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .options-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .options-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+            font-size: 1.02rem;
+            cursor: pointer;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            margin-bottom: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .options-group input[type="checkbox"] {
+            accent-color: var(--accent-color);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+        }
+
+        .whatsapp-section {
+            margin-top: 60px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .whatsapp-section h3 {
+            color: var(--text-main);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+        }
+
+        .whatsapp-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #25D366;
+            color: #ffffff;
+            padding: 14px 28px;
+            border-radius: 35px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-btn.delivery {
+            background-color: #128C7E;
+            box-shadow: 0 4px 15px rgba(18, 140, 126, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+        }
+
+        footer {
+            background-color: var(--bg-footer);
+            text-align: center;
+            padding: 25px;
+            border-top: 1px solid var(--border-card);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav ul {
+                gap: 10px;
+            }
+            .hero-home h1 {
+                font-size: 2.2rem;
+            }
+            .about-content {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الشريط العلوي والشعار المحدث -->
+    <header>
+        <div class="logo">
+            <div class="logo-badge" title="Allo Jibli Livreur">🛵</div>
+            <p>allo jibli</p>
+        </div>
+        <div class="nav-container">
+            <nav>
+                <ul>
+                    <li><a onclick="showSection('home')" class="nav-link active" id="link-home" data-key="nav-home">شعار وعلامة</a></li>
+                    <li><a onclick="showSection('about')" class="nav-link" id="link-about" data-key="nav-about">من نحن</a></li>
+                    <li><a onclick="showSection('menu')" class="nav-link" id="link-menu" data-key="nav-menu">Menu</a></li>
+                </ul>
+            </nav>
+            <div class="controls-container">
+                <button onclick="changeLang('ar')" class="lang-btn active" id="btn-ar">AR</button>
+                <button onclick="changeLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+                <button onclick="changeLang('en')" class="lang-btn" id="btn-en">EN</button>
+                <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="تغيير الوضع">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى -->
+    <main>
+        <!-- 1. قسم الشعار والعلامة -->
+        <section id="home" class="section active">
+            <div class="hero-home">
+                <h1 data-key="hero-title">مرحباً بكم في allo jibli</h1>
+                <p data-key="hero-desc">ألذ وجبات الشارع على الطريقة المغربية الأصيلة في قلب مدينة فاس. نكهة تقليدية بعيون عصرية، ساخنة ومقرمشة وتوصلك فين ما كنت!</p>
+                <button class="btn" onclick="showSection('menu')" data-key="hero-btn">اكتشف المنيو الآن</button>
+            </div>
+        </section>
+
+        <!-- 2. قسم من نحن -->
+        <section id="about" class="section">
+            <div class="about-content">
+                <h2 data-key="about-title">من نحن وقصة allo jibli؟</h2>
+                <p data-key="about-p1"><strong>allo jibli</strong> هو مشروع بأسلوب عصري وشعبي في مدينة فاس العتيقة، وُلد من رحم حب الأكلات البسيطة التي تجمعنا على مائدة واحدة بنكهة لا تُنسى.</p>
+                <p data-key="about-p2"><strong>الفكرة:</strong> فكرتنا بسيطة ولكنها تلامس القلب والبطن؛ تقديم أشهى الأطباق المغربية الشهيرة بمختلف إضافاتها اللذيذة بجودة عالية ونظافة تامة، مع خدمة توصيل سريعة تغطي مختلف أحياء مدينة فاس.</p>
+                <p data-key="about-p3">هدفنا ليس فقط إطعامك، بل إعادة ذكريات الشارع المغربي الأصيل بنكهة مميزة تجعلك تبتسم مع كل قضمـة.</p>
+            </div>
+        </section>
+
+        <!-- 3. قسم المنيو والطلبات المحدث -->
+        <section id="menu" class="section">
+            <h2 class="section-title" data-key="menu-title">القائمة (Menu)</h2>
+
+            <!-- القسم الأول: المعقودة -->
+            <h3 class="section-title" style="font-size: 1.4rem; border: none; margin-top: 20px;" data-key="sec-maakouda">قسم المعقودة</h3>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <h3 data-key="item-1">معقودة عادية</h3>
+                    <span class="price">6 دراهم + 10 توصيل</span>
+                    <button class="btn" onclick="openOptionsModal('معقودة عادية')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-2">معقودة بالبيض</h3>
+                    <span class="price">8 دراهم + 10 توصيل</span>
+                    <button class="btn" onclick="openOptionsModal('معقودة بالبيض')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-3">معقودة باللانشون</h3>
+                    <span class="price">8 دراهم + 10 توصيل</span>
+                    <button class="btn" onclick="openOptionsModal('معقودة باللانشون')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-4">معقودة بالفرماج</h3>
+                    <span class="price">8 دراهم + 10 توصيل</span>
+                    <button class="btn" onclick="openOptionsModal('معقودة بالفرماج')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-5">معقوده فريت</h3>
+                    <span class="price">8دراهم + 10 توصيل</span>
+                    <button class="btn" onclick="openOptionsModal('فريت')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+            </div>
+
+            <!-- القسم الثاني: لنيم (بدون صوصات، طلب مباشر) -->
+            <h3 class="section-title" style="font-size: 1.4rem; border: none; margin-top: 40px;" data-key="sec-nems">قسم لنيم</h3>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <h3 data-key="item-6">لينم صغار</h3>
+                    <span class="price">4 دراهم + 10 توصيل</span>
+                    <button class="btn" onclick="sendDirectWhatsApp('لينم صغار')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-7">لينم كبار</h3>
+                    <span class="price">9درهم + 10 توصيل</span>
+                    <button class="btn" onclick="sendDirectWhatsApp('لينم كبار')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-8">لبول</h3>
+                    <span class="price">6 درهم + 10 توصيل</span>
+                    <button class="btn" onclick="sendDirectWhatsApp('لبول')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-9">سكار فرماج</h3>
+                    <span class="price">3 درهم + 10 توصيل</span>
+                    <button class="btn" onclick="sendDirectWhatsApp('سكار فرماج')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-10">سكار شاركوتري</h3>
+                    <span class="price">8درهم + 10 توصيل</span>
+                    <button class="btn" onclick="sendDirectWhatsApp('سكار شاركوتري')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-11">نيم حوت</h3>
+                    <span class="price">10 درهم + 10 توصيل</span>
+                    <button class="btn" onclick="sendDirectWhatsApp('نيم حوت')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-12">جناح</h3>
+                    <span class="price">10 درهم + 10 توصيل</span>
+                    <button class="btn" onclick="sendDirectWhatsApp('جناح')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+            </div>
+
+            <!-- القسم الثالث: بوكاديوس -->
+            <h3 class="section-title" style="font-size: 1.4rem; border: none; margin-top: 40px;" data-key="sec-bokadious">قسم بوكاديوس</h3>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <h3 data-key="item-13">بوكاديوس</h3>
+                    <span class="price">10 درهم + 10 توصيل</span>
+                    <button class="btn" onclick="openBokadiousModal('بوكاديوس')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-14">بوكاديوس كاشير</h3>
+                    <span class="price">12 درهم + 10 توصيل</span>
+                    <button class="btn" onclick="openBokadiousModal('بوكاديوس كاشير')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+                <div class="menu-card">
+                    <h3 data-key="item-15">بوكاديوس فرماج</h3>
+                    <span class="price">12 درهم + 10 توصيل</span>
+                    <button class="btn" onclick="openBokadiousModal('بوكاديوس فرماج')" data-key="order-btn">اطلبها الآن</button>
+                </div>
+            </div>
+
+            <!-- أزرار الواتساب المخصصة للطلب والتواصل -->
+            <div class="whatsapp-section">
+                <h3 data-key="wa-section-title">جاهز لطلبك؟ تواصل معنا مباشرة عبر الواتساب</h3>
+                <div class="whatsapp-container">
+                    <a href="https://wa.me/212698870573?text=سلام،%20عندي%20طلبية%20بغيت%20نسول%20عليها" target="_blank" class="whatsapp-btn" data-key="wa-btn-1">
+                        💬 للطلب المباشر مع المحل
+                    </a>
+                    <a href="https://wa.me/212698870573?text=سلام،%20بغيت%20نتواصل%20مع%20الدراج%20(Livreur)%20بخصوص%20التوصيل" target="_blank" class="whatsapp-btn delivery" data-key="wa-btn-2">
+                        🛵 للتواصل مع الدراج (Livreur)
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- نافذة اختيار الصوصات العادية (Modal) -->
+    <div class="modal-overlay" id="optionsModal">
+        <div class="modal-content">
+            <h3 id="modalItemTitle">اختيار الصوصات والإضافات</h3>
+            <p>اختر ما يناسبك لإضافته للوجبة:</p>
+            
+            <div class="options-group">
+                <label><input type="checkbox" id="optKetchup" value="كاتشب"> كاتشب</label>
+                <label><input type="checkbox" id="optMayonnaise" value="مايونيز"> مايونيز</label>
+                <label><input type="checkbox" id="optSpicy" value="لاصوص حار"> لاصوص حار</label>
+                <label><input type="checkbox" id="optSweet" value="لاصوص حلو"> لاصوص حلو</label>
+                <label><input type="checkbox" id="optCornichon" value="كورنيشو"> كورنيشو</label>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-cancel" onclick="closeOptionsModal()" data-key="btn-cancel">إلغاء</button>
+                <button class="btn" onclick="sendWhatsAppOrder()" data-key="btn-send">إرسال الطلب للواتساب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة البوكاديوس المخصصة والخضروات والمكونات مفصولة (Modal) -->
+    <div class="modal-overlay" id="bokadiousModal">
+        <div class="modal-content">
+            <h3 id="bokadiousModalTitle">تخصيص البوكاديوس</h3>
+            <p>اختر الصوصات والخضروات والمكونات المفضلة لديك:</p>
+            
+            <div class="options-group">
+                <label style="color: var(--accent-color); font-weight: 700; background: transparent;">الصوصات:</label>
+                <label><input type="checkbox" id="bokKetchup" value="كاتشب"> كاتشب</label>
+                <label><input type="checkbox" id="bokMayonnaise" value="مايونيز"> مايونيز</label>
+                <label><input type="checkbox" id="bokSpicy" value="لاصوص حار"> لاصوص حار</label>
+                <label><input type="checkbox" id="bokSweet" value="لاصوص حلو"> لاصوص حلو</label>
+                <label><input type="checkbox" id="bokCornichon" value="كورنيشو"> كورنيشو</label>
+            </div>
+
+            <div class="options-group" style="border-top: 1px dashed var(--border-color); padding-top: 10px; margin-top: 10px;">
+                <label style="color: var(--accent-color); font-weight: 700; background: transparent;">الخضروات والمكونات:</label>
+                <label><input type="checkbox" id="bokTomato" value="مطيشة" checked> مطيشة (طماطم)</label>
+                <label><input type="checkbox" id="bokCucumber" value="الخيار" checked> الخيار</label>
+                <label><input type="checkbox" id="bokCarrot" value="خيزو"> خيزو (جزر)</label>
+                <label><input type="checkbox" id="bokBoiledPotato" value="بطاطا مسلوقة"> بطاطا مسلوقة</label>
+                <label><input type="checkbox" id="bokRice" value="روز"> روز (أرز)</label>
+                <label><input type="checkbox" id="bokPasta" value="ليباط"> ليباط (معكرونة)</label>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-cancel" onclick="closeBokadiousModal()" data-key="btn-cancel">إلغاء</button>
+                <button class="btn" onclick="sendBokadiousWhatsAppOrder()" data-key="btn-send">إرسال الطلب للواتساب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- التذييل -->
+    <footer>
+        <p data-key="footer-text">© 2026 allo jibli - فاس. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <!-- سكريبت التنقل والترجمة وإدارة النوافذ والطلبات -->
+    <script>
+        let currentSelectedMeal = '';
+
+        const translations = {
+            ar: {
+                "site-title": "Allo Jibli - فاس",
+                "nav-home": "شعار وعلامة",
+                "nav-about": "من نحن",
+                "nav-menu": "Menu",
+                "hero-title": "مرحباً بكم في allo jibli",
+                "hero-desc": "ألذ وجبات الشارع على الطريقة المغربية الأصيلة في قلب مدينة فاس. نكهة تقليدية بعيون عصرية، ساخنة ومقرمشة وتوصلك فين ما كنت!",
+                "hero-btn": "اكتشف المنيو الآن",
+                "about-title": "من نحن وقصة allo jibli؟",
+                "about-p1": "allo jibli هو مشروع بأسلوب عصري وشعبي في مدينة فاس العتيقة، وُلد من رحم حب الأكلات البسيطة التي تجمعنا على مائدة واحدة بنكهة لا تُنسى.",
+                "about-p2": "الفكرة: فكرتنا بسيطة ولكنها تلامس القلب والبطن؛ تقديم أشهى الأطباق المغربية الشهيرة بمختلف إضافاتها اللذيذة بجودة عالية ونظافة تامة، مع خدمة توصيل سريعة تغطي مختلف أحياء مدينة فاس.",
+                "about-p3": "هدفنا ليس فقط إطعامك، بل إعادة ذكريات الشارع المغربي الأصيل بنكهة مميزة تجعلك تبتسم مع كل قضمـة.",
+                "menu-title": "القائمة (Menu)",
+                "sec-maakouda": "قسم المعقودة",
+                "sec-nems": "قسم لنيم",
+                "sec-bokadious": "قسم بوكاديوس",
+                "item-1": "معقودة عادية",
+                "item-2": "معقودة بالبيض",
+                "item-3": "معقودة باللانشون",
+                "item-4": "معقودة بالفرماج",
+                "item-5": "فريت",
+                "item-6": "لينم صغار",
+                "item-7": "لينم كبار",
+                "item-8": "لبول",
+                "item-9": "سكار فرماج",
+                "item-10": "سكار شاركوتري",
+                "item-11": "نيم حوت",
+                "item-12": "جناح",
+                "item-13": "بوكاديوس",
+                "item-14": "بوكاديوس كاشير",
+                "item-15": "بوكاديوس فرماج",
+                "order-btn": "اطلبها الآن",
+                "wa-section-title": "جاهز لطلبك؟ تواصل معنا مباشرة عبر الواتساب",
+                "wa-btn-1": "💬 للطلب المباشر مع المحل",
+                "wa-btn-2": "🛵 للتواصل مع الدراج (Livreur)",
+                "btn-cancel": "إلغاء",
+                "btn-send": "إرسال الطلب للواتساب",
+                "footer-text": "© 2026 allo jibli - فاس. جميع الحقوق محفوظة."
+            },
+            fr: {
+                "site-title": "Allo Jibli - Fès",
+                "nav-home": "Accueil",
+                "nav-about": "À propos",
+                "nav-menu": "Menu",
+                "hero-title": "Bienvenue chez allo jibli",
+                "hero-desc": "Les meilleurs en-cas marocains authentiques au cœur de Fès. Chaud, croustillant et livré où que vous soyez !",
+                "hero-btn": "Découvrir le Menu",
+                "about-title": "Qui sommes-nous et l'histoire de allo jibli ?",
+                "about-p1": "allo jibli est un projet au style moderne et populaire dans l'ancienne médina de Fès, né de l'amour des plats simples qui nous rassemblent.",
+                "about-p2": "L'idée : Proposer de délicieux plats traditionnels avec différentes garnitures et une hygiène irréprochable.",
+                "about-p3": "Notre objectif est de vous offrir des saveurs uniques qui vous font sourire à chaque bouchée.",
+                "menu-title": "Menu",
+                "sec-maakouda": "Section Maâgouda",
+                "sec-nems": "Section Nems",
+                "sec-bokadious": "Section Bokadious",
+                "item-1": "Maâgouda Simple",
+                "item-2": "Maâgouda avec Œuf",
+                "item-3": "Maâgouda avec Mortadelle",
+                "item-4": "Maâgouda avec Fromage",
+                "item-5": "Frites",
+                "item-6": "Petits Nems",
+                "item-7": "Grands Nems",
+                "item-8": "Bowl",
+                "item-9": "Skar Fromage",
+                "item-10": "Skar Charcuterie",
+                "item-11": "Nem Poisson",
+                "item-12": "Ailes",
+                "item-13": "Bokadious",
+                "item-14": "Bokadious Cachir",
+                "item-15": "Bokadious Fromage",
+                "order-btn": "Commander",
+                "wa-section-title": "Prêt pour votre commande ? Contactez-nous directement sur WhatsApp",
+                "wa-btn-1": "💬 Commande directe",
+                "wa-btn-2": "🛵 Contacter le livreur",
+                "btn-cancel": "Annuler",
+                "btn-send": "Envoyer sur WhatsApp",
+                "footer-text": "© 2026 allo jibli - Fès. Tous droits réservés."
+            },
+            en: {
+                "site-title": "Allo Jibli - Fes",
+                "nav-home": "Home",
+                "nav-about": "About Us",
+                "nav-menu": "Menu",
+                "hero-title": "Welcome to allo jibli",
+                "hero-desc": "The most delicious authentic street food in the heart of Fes. Hot, crispy, and delivered right to your doorstep!",
+                "hero-btn": "Explore Menu",
+                "about-title": "About Us & Story of allo jibli",
+                "about-p1": "allo jibli is a modern street-food project in the ancient medina of Fes, born out of a love for delicious simple dishes.",
+                "about-p2": "The Idea: Serving famous Moroccan street food with various delicious toppings and fast delivery.",
+                "about-p3": "Our goal is to bring back authentic flavors that make you smile with every bite.",
+                "menu-title": "Menu",
+                "sec-maakouda": "Maakouda Section",
+                "sec-nems": "Nems Section",
+                "sec-bokadious": "Bokadious Section",
+                "item-1": "Simple Maâgouda",
+                "item-2": "Maâgouda with Egg",
+                "item-3": "Maâgouda with Mortadella",
+                "item-4": "Maâgouda with Cheese",
+                "item-5": "Fries",
+                "item-6": "Small Nems",
+                "item-7": "Large Nems",
+                "item-8": "Bowl",
+                "item-9": "Skar Cheese",
+                "item-10": "Skar Charcuterie",
+                "item-11": "Fish Nem",
+                "item-12": "Wings",
+                "item-13": "Bokadious",
+                "item-14": "Bokadious Cachir",
+                "item-15": "Bokadious Cheese",
+                "order-btn": "Order Now",
+                "wa-section-title": "Ready for your order? Contact us directly via WhatsApp",
+                "wa-btn-1": "💬 Direct Order",
+                "wa-btn-2": "🛵 Contact Delivery Rider",
+                "btn-cancel": "Cancel",
+                "btn-send": "Send to WhatsApp",
+                "footer-text": "© 2026 allo jibli - Fes. All rights reserved."
+            }
+        };
+
+        function openOptionsModal(mealName) {
+            currentSelectedMeal = mealName;
+            document.getElementById('modalItemTitle').textContent = 'طلب: ' + mealName;
+            
+            document.getElementById('optKetchup').checked = false;
+            document.getElementById('optMayonnaise').checked = false;
+            document.getElementById('optSpicy').checked = false;
+            document.getElementById('optSweet').checked = false;
+            document.getElementById('optCornichon').checked = false;
+
+            document.getElementById('optionsModal').style.display = 'flex';
+        }
+
+        function closeOptionsModal() {
+            document.getElementById('optionsModal').style.display = 'none';
+        }
+
+        function sendWhatsAppOrder() {
+            let selectedOptions = [];
+            
+            if (document.getElementById('optKetchup').checked) selectedOptions.push('كاتشب');
+            if (document.getElementById('optMayonnaise').checked) selectedOptions.push('مايونيز');
+            if (document.getElementById('optSpicy').checked) selectedOptions.push('لاصوص حار');
+            if (document.getElementById('optSweet').checked) selectedOptions.push('لاصوص حلو');
+            if (document.getElementById('optCornichon').checked) selectedOptions.push('كورنيشو');
+
+            let message = `سلام، بغيت نطلب ${currentSelectedMeal}. الإضافات والوصوصات: ${selectedOptions.length > 0 ? selectedOptions.join('، ') : 'بدون إضافات محددة'}`;
+            let encodedMessage = encodeURIComponent(message);
+            let whatsappUrl = `https://wa.me/212698870573?text=${encodedMessage}`;
+            
+            closeOptionsModal();
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // دالة إرسال قسم لنيم مباشرة للواتساب دون نوافذ أو صوصات
+        function sendDirectWhatsApp(mealName) {
+            let message = `سلام، بغيت نطلب ${mealName}.`;
+            let encodedMessage = encodeURIComponent(message);
+            let whatsappUrl = `https://wa.me/212698870573?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function openBokadiousModal(mealName) {
+            currentSelectedMeal = mealName;
+            document.getElementById('bokadiousModalTitle').textContent = 'طلب بوكاديوس: ' + mealName;
+            
+            document.getElementById('bokKetchup').checked = false;
+            document.getElementById('bokMayonnaise').checked = false;
+            document.getElementById('bokSpicy').checked = false;
+            document.getElementById('bokSweet').checked = false;
+            document.getElementById('bokCornichon').checked = false;
+            
+            document.getElementById('bokTomato').checked = true;
+            document.getElementById('bokCucumber').checked = true;
+            document.getElementById('bokCarrot').checked = false;
+            document.getElementById('bokBoiledPotato').checked = false;
+            document.getElementById('bokRice').checked = false;
+            document.getElementById('bokPasta').checked = false;
+
+            document.getElementById('bokadiousModal').style.display = 'flex';
+        }
+
+        function closeBokadiousModal() {
+            document.getElementById('bokadiousModal').style.display = 'none';
+        }
+
+        function sendBokadiousWhatsAppOrder() {
+            let selectedOptions = [];
+            let selectedVeggies = [];
+            
+            if (document.getElementById('bokKetchup').checked) selectedOptions.push('كاتشب');
+            if (document.getElementById('bokMayonnaise').checked) selectedOptions.push('مايونيز');
+            if (document.getElementById('bokSpicy').checked) selectedOptions.push('لاصوص حار');
+            if (document.getElementById('bokSweet').checked) selectedOptions.push('لاصوص حلو');
+            if (document.getElementById('bokCornichon').checked) selectedOptions.push('كورنيشو');
+
+            if (document.getElementById('bokTomato').checked) selectedVeggies.push('مطيشة');
+            if (document.getElementById('bokCucumber').checked) selectedVeggies.push('الخيار');
+            if (document.getElementById('bokCarrot').checked) selectedVeggies.push('خيزو');
+            if (document.getElementById('bokBoiledPotato').checked) selectedVeggies.push('بطاطا مسلوقة');
+            if (document.getElementById('bokRice').checked) selectedVeggies.push('روز');
+            if (document.getElementById('bokPasta').checked) selectedVeggies.push('ليباط');
+
+            let message = `سلام، بغيت نطلب ${currentSelectedMeal}.\nالصوصات: ${selectedOptions.length > 0 ? selectedOptions.join('، ') : 'بدون صوص'}\nالخضروات والمكونات: ${selectedVeggies.length > 0 ? selectedVeggies.join('، ') : 'بدون إضافات'}`;
+            let encodedMessage = encodeURIComponent(message);
+            let whatsappUrl = `https://wa.me/212698870573?text=${encodedMessage}`;
+            
+            closeBokadiousModal();
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function changeLang(lang) {
+            localStorage.setItem('site-lang', lang);
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            if (lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', lang);
+            }
+        }
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => link.classList.remove('active'));
+
+            document.getElementById(sectionId).classList.add('active');
+            document.getElementById('link-' + sectionId).classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeToggleBtn');
+            
+            html.classList.toggle('light-mode');
+            
+            if (html.classList.contains('light-mode')) {
+                btn.textContent = '☀️';
+                localStorage.setItem('theme', 'light');
+            } else {
+                btn.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            const btn = document.getElementById('themeToggleBtn');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.add('light-mode');
+                btn.textContent = '☀️';
+            } else {
+                btn.textContent = '🌙';
+            }
+
+            const savedLang = localStorage.getItem('site-lang') || 'ar';
+            changeLang(savedLang);
+        });
+    </script>
+</body>
+</html>
